@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow(L"LE2S_00_フジイ_コハク_AL3");
+	win->CreateGameWindow(L"LE2SS_00_フジイ_コハク_AL3");
 
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();
