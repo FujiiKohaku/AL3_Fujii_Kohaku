@@ -1,7 +1,6 @@
+#include "GameScene.h"
 #include <KamataEngine.h>
-
 using namespace KamataEngine;
-
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = nullptr;
@@ -11,7 +10,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Audio* audio = nullptr;
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
-
+	// GameSceneのインスタンスを作成
+	GameScene* gameScene = new GameScene();//
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
 	win->CreateGameWindow(L"LE20_00_フジイ_コハク_AL3");
@@ -37,6 +37,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	TextureManager::GetInstance()->Initialize(dxCommon->GetDevice());
 	TextureManager::Load("white1x1.png");
 
+	gameScene->Initialize(); // 初期化
+
 	// スプライト静的初期化
 	Sprite::StaticInitialize(dxCommon->GetDevice(), WinApp::kWindowWidth, WinApp::kWindowHeight);
 
@@ -50,6 +52,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	primitiveDrawer = PrimitiveDrawer::GetInstance();
 	primitiveDrawer->Initialize();
 #pragma endregion
+
 
 	// メインループ
 	while (true) {
@@ -75,6 +78,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		primitiveDrawer->Reset();
 		// ImGui描画
 		imguiManager->Draw();
+		// ゲームシーン描画
+		gameScene->Draw();//
 		// 描画終了
 		dxCommon->PostDraw();
 	}
@@ -82,6 +87,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// 3Dモデル解放
 	Model::StaticFinalize();
 	audio->Finalize();
+	// **GameSceneの解放**
+	gameScene->~GameScene();
 	// ImGui解放
 	imguiManager->Finalize();
 
